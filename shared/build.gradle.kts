@@ -5,6 +5,8 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    // Apply the KMMBridge plugin
+    id("co.touchlab.kmmbridge")
 }
 
 kotlin {
@@ -18,7 +20,7 @@ kotlin {
         }
     }
     
-    val xcf = XCFramework()
+//    val xcf = XCFramework()
     listOf(
         iosX64(),
         iosArm64(),
@@ -26,7 +28,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            xcf.add(this)
+//            xcf.add(this)
             isStatic = true
         }
     }
@@ -51,4 +53,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
+
+kmmbridge {
+    mavenPublishArtifacts()
+    spm()
 }
